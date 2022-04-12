@@ -172,25 +172,14 @@ void OpticalFlowMultiLevel(
     double scale[] = {1.0, 0.5, 0.25, 0.125};
     //create pyramid
     vector<cv::Mat> pyr1, pyr2;
-//    for (int i = 0; i < pyramids; i++) {
-//        pyr1.push_back(img1);
-//        pyr2.push_back(img2);
-//        cv::pyrDown(pyr1[MAX(i-1,0)], pyr1[i]);
-//        cv::pyrDown(pyr2[MAX(i-1,0)], pyr2[i]);
-//    }
-    for (int i = 0; i < pyramids; i++) {
-        if (i == 0) {
-            pyr1.push_back(img_1);
-            pyr2.push_back(img_2);
-        } else {
-            cv::Mat img1_pyr, img2_pyr;
-            cv::resize(pyr1[i - 1], img1_pyr,
-                       cv::Size(pyr1[i - 1].cols * pyramid_scale, pyr1[i - 1].rows * pyramid_scale));
-            cv::resize(pyr2[i - 1], img2_pyr,
-                       cv::Size(pyr2[i - 1].cols * pyramid_scale, pyr2[i - 1].rows * pyramid_scale));
-            pyr1.push_back(img1_pyr);
-            pyr2.push_back(img2_pyr);
-        }
+    pyr1.push_back(img_1);
+    pyr2.push_back(img_2);
+    for (int i = 1; i < pyramids; i++) {
+        cv::Mat tmp1, tmp2;
+        cv::pyrDown(pyr1[i-1], tmp1);
+        cv::pyrDown(pyr2[i-1], tmp2);
+        pyr1.push_back(tmp1);
+        pyr2.push_back(tmp2);
     }
 
     vector<cv::KeyPoint> kp1_pyr, kp2_pyr;
@@ -239,6 +228,7 @@ cv::Mat opticalFlowDetectUsingOpencv(cv::Mat &img_1, cv::Mat &img_2, vector<cv::
     return DrawOpticalFlowInImage(img_2, pt1, pt2, status);
 }
 
+#ifdef MAIN_OPTICAL_FLOW
 int main() {
     // Read images
     cv::Mat img_1 = imread(file_1, cv::IMREAD_GRAYSCALE);
@@ -283,3 +273,4 @@ int main() {
     cv::waitKey(0);
     return 0;
 }
+#endif

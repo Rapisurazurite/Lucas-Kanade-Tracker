@@ -5,6 +5,7 @@
   - Single Level Tracker
   - Multi Level Tracker with pyramid
   - OpenCV's implementation
+- add direct method to track the object in the image
 ### Build
   ```bash
   mkdir build && cd build
@@ -13,4 +14,4 @@
   ```
 ### Call in Python
 - using pybind11 to wrap the C++ code 
-- example in `test_module.py`
+- example in `test_optical_flow.py` and `test_direct_method.py`

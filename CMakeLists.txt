@@ -24,7 +24,8 @@ include_directories(
     "/usr/include/eigen3"
 )
 
-pybind11_add_module(cmake_example src/main.cpp src/imageBasic.cpp src/optical_flow.cpp src/optical_flow_bind.cpp)
+pybind11_add_module(cmake_example src/main.cpp src/imageBasic.cpp src/optical_flow.cpp src/optical_flow_bind.cpp
+        src/direct_method.cpp src/direct_method_bind.cpp src/cv_wrapper.cpp)
 target_link_libraries(cmake_example PRIVATE ${OpenCV_LIBS})
 
 
@@ -33,5 +34,10 @@ target_link_libraries(gaussNewton PRIVATE pybind11::embed)
 
 add_executable(opticalFlow src/optical_flow.cpp)
 target_link_libraries(opticalFlow ${OpenCV_LIBS} )
+target_compile_definitions(opticalFlow PRIVATE -DMAIN_OPTICAL_FLOW)
+
+add_executable(direct_method src/direct_method.cpp)
+target_link_libraries(direct_method ${OpenCV_LIBS})
+target_compile_definitions(direct_method PRIVATE -DMAIN_DIRECT_METHOD)
 # EXAMPLE_VERSION_INFO is defined by setup.py and passed into the C++ code as a
 # define (VERSION_INFO) here.1

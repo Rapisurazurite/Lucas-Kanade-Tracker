@@ -11,7 +11,7 @@
 namespace py = pybind11;
 void init_ex_imageBasic(py::module_ &m);
 void init_ex_opticalFlow(py::module &m);
-
+void init_ex_directMethod(py::module &m);
 
 PYBIND11_MODULE(cmake_example, m) {
 m.doc() = R"pbdoc(
@@ -33,6 +33,8 @@ m.doc() = R"pbdoc(
  */
 init_ex_imageBasic(m);
 init_ex_opticalFlow(m);
+init_ex_directMethod(m);
+
 
 
 
